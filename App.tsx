@@ -2,7 +2,7 @@ import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
 import { StyledEngineProvider, ThemeProvider, Box } from "@mui/material";
 import { theme } from "./src/utils/theme";
 import { GlobalStyles } from "./src/GlobalStyle";
-import Home from "./src/container/Home";
+import Home from "./src/containers/Home";
 
 const App = () => {
   return (
