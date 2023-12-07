@@ -1,2 +1,2 @@
-# mui-emotion-starter
+# product-hero-draft
 Created with CodeSandbox

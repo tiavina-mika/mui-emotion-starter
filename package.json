@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "@emotion/babel-plugin": "11.10.6",
+    "@emotion/css": "11.10.6",
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
+    "@hookform/resolvers": "3.0.0",
+    "@mui/icons-material": "5.11.11",
+    "@mui/material": "latest",
+    "@mui/x-date-pickers": "6.0.3",
+    "@types/lodash": "4.14.192",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/uuid": "9.0.1",
+    "dayjs": "1.11.7",
+    "lodash": "4.17.21",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "7.43.9",
+    "react-use-draggable-scroll": "0.4.7",
+    "typescript": "latest",
+    "uuid": "9.0.0",
+    "zod": "3.21.4"
+  },
+  "description": "https://github.com/mui/material-ui/blob/v5.13.2/docs/data/material/components/text-fields/BasicTextFields.tsx",
+  "devDependencies": {
+    "react-scripts": "latest"
+  },
+  "main": "index.tsx",
+  "scripts": {
+    "start": "react-scripts start"
+  }
+}
