@@ -19,7 +19,7 @@ const Home = () => {
     <div className="flexColumn spaceBetween" css={classes.root}>
       <div css={classes.content}>
         <Typography variant="h3">
-          A project starter for MUI and Emotion
+          A project starter for Material UI 5, Emotion and TypeScript
         </Typography>
       </div>
       <Footer />
