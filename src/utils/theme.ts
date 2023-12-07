@@ -1,6 +1,5 @@
-import { createTheme, PaletteColor } from "@mui/material";
+import { createTheme } from "@mui/material";
 import { LAYOUT_CONTENT_PADDING } from "./constants";
-import { generateRandomNumber } from "./utils";
 
 declare module "@mui/material/Chip" {
   interface ChipPropsVariantOverrides {
@@ -346,17 +345,3 @@ export const theme = createTheme({
     }
   }
 });
-
-/**
- * get random palette from an array
- */
-export const getRandomPalette = (max: number): PaletteColor => {
-  const paletteKeys = Object.keys(palette).filter(
-    (key: string) => key !== "grey"
-  );
-  const randomIndex = generateRandomNumber(0, max);
-  const selectedPaletteKey = paletteKeys[randomIndex];
-
-  if (!selectedPaletteKey) return palette.info;
-  return (palette as any)[selectedPaletteKey];
-};
