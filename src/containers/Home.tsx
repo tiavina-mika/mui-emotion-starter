@@ -3,7 +3,6 @@
 /** @jsxImportSource @emotion/react */
 import { Typography } from "@mui/material";
 import { LAYOUT_CONTENT_PADDING } from "../utils/constants";
-import { Theme } from "@emotion/react";
 import Footer from "../components/Footer";
 
 const classes = {
