@@ -30,7 +30,7 @@ const classes = {
 const Footer = () => {
   return (
     <div className="flexRow spaceBetween stretchSelf" css={classes.footer}>
-      <Stack spacing={1} direction="row" justifyContent="center">
+      <Stack spacing={1} direction="row" flex={1}>
         {links.map((link, index) => (
           <Stack
             spacing={1}
@@ -50,7 +50,7 @@ const Footer = () => {
           By Tiavina Michael Ralainirina
         </Typography>
       </div>
-      <div className="flexCenter stretchSelf">
+      <div className="flexCenter stretchSelf flex1 flexEnd">
         <Typography className="flexRow center grey800">
           <span css={{ marginRight: 2 }}>©</span>
           <span>{new Date().getFullYear()}</span>
