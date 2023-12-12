@@ -13,7 +13,6 @@ import {
   mergeAttributes
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
 import { css, cx } from "@emotion/css";
 import { FormHelperText, Typography, useTheme } from "@mui/material";
 import Link from "@tiptap/extension-link";
@@ -59,7 +58,7 @@ const classes = {
       fontWeight: 300
     }
   }),
-  input: (theme: Theme, editable = true, placeholder: string) =>
+  input: (theme: Theme, editable = true, placeholder: string | undefined) =>
     css({
       borderRadius: 6,
       border: editable ? "1px solid " + theme.palette.grey[800] : "none",
