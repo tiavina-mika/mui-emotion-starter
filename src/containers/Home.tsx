@@ -92,7 +92,7 @@ const Home = () => {
             </Typography>
           </div>
         </div>
-        <div>
+        <div className="flexColumn stretchSelf flex1" css={{ padding: 12 }}>
           <Form
             form={form}
             onSubmit={handleSubmit(onSubmitHandler)}
