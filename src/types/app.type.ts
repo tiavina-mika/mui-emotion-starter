@@ -6,6 +6,7 @@ export interface ISelectOption<V = any> {
   icon?: ReactNode | string;
 }
 
-export interface ISwitchOption extends ISelectOption {
-  checked?: boolean;
+export interface ITextEditorCollaborationUser {
+  name: string;
+  color: string;
 }
