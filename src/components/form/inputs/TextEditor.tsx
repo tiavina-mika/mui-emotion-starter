@@ -2,13 +2,10 @@
 /* @jsx jsx */
 /** @jsxImportSource @emotion/react */
 import { Theme, jsx } from "@emotion/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import {
   useEditor,
-  // FloatingMenu,
-  // BubbleMenu,
-  EditorContent,
   EditorOptions,
   mergeAttributes
 } from "@tiptap/react";
@@ -320,7 +317,6 @@ const TextEditor = ({
             }),
           ]}
         />
-        <EditorContent editor={editor} css={classes.editor} />
         {error && (
           <FormHelperText error css={{ paddingTop: 4, paddingBottom: 4 }}>
             {error}
