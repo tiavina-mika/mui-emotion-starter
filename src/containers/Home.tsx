@@ -5,6 +5,9 @@ import { Typography } from "@mui/material";
 import { LAYOUT_CONTENT_PADDING } from "../utils/constants";
 import Footer from "../components/Footer";
 import { Theme } from "@emotion/react";
+import { useState } from "react";
+import { Editor as NovelEditor } from "novel";
+import { Markdown } from "tiptap-markdown";
 
 const classes = {
   root: {
@@ -20,6 +23,9 @@ const classes = {
 };
 
 const Home = () => {
+  const [value, setValue] = useState("");
+  console.log(value);
+
   return (
     <div className="flexColumn spaceBetween" css={classes.root}>
       <div className="stretchSelf">
@@ -32,6 +38,23 @@ const Home = () => {
               A project starter for Material UI 5, Emotion and TypeScript
             </Typography>
           </div>
+        </div>
+        <div>
+          <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400"></div>
+          <NovelEditor
+            defaultValue={value}
+            onDebouncedUpdate={(e) => {
+              setValue(e.getHTML());
+            }}
+            disableLocalStorage
+            extensions={[
+              Markdown.configure({
+                html: true,
+                transformCopiedText: true,
+                transformPastedText: true
+              })
+            ]}
+          />
         </div>
       </div>
       <Footer />

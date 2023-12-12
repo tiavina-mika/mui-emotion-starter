@@ -10,6 +10,7 @@
     "@mui/x-date-pickers": "6.0.3",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "novel": "0.1.22",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "7.43.9",
