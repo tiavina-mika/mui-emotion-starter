@@ -2,16 +2,8 @@
 /* @jsx jsx */
 /** @jsxImportSource @emotion/react */
 import { Theme, jsx } from "@emotion/react";
-import { useEffect, useState } from "react";
 
-import {
-  useEditor,
-  // FloatingMenu,
-  // BubbleMenu,
-  EditorContent,
-  EditorOptions,
-  mergeAttributes
-} from "@tiptap/react";
+import { EditorOptions, mergeAttributes } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { css, cx } from "@emotion/css";
 import { FormHelperText, Typography, useTheme } from "@mui/material";
@@ -57,11 +49,9 @@ const classes = {
       fontFamily: "Product Sans Regular",
       fontWeight: 300
     },
-    "& .ProseMirror ": {
-      paddingLeft: 30
-    },
+    // remove drag and drop
     "& .drag-handle": {
-      paddingLeft: "20px !important"
+      display: "none"
     },
     "& h1": { fontSize: 32 },
     "& h2": { fontSize: 22 },
@@ -151,30 +141,30 @@ const CustomMention = Mention.extend({
   }
 });
 
-// const ydoc = new Y.Doc();
-// const provider = new WebrtcProvider("workspace-04", ydoc);
+const ydoc = new Y.Doc();
+const provider = new WebrtcProvider("workspace-04", ydoc);
 
-// const CustomCollaborationCursor = CollaborationCursor.extend({
-//   addOptions() {
-//     return {
-//       ...this.parent?.(),
-//       render: (user: ITextEditorCollaborationUser) => {
-//         const cursor = document.createElement("div");
+const CustomCollaborationCursor = CollaborationCursor.extend({
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      render: (user: ITextEditorCollaborationUser) => {
+        const cursor = document.createElement("div");
 
-//         cursor.classList.add("collaboration-cursor-name-container");
+        cursor.classList.add("collaboration-cursor-name-container");
 
-//         const label = document.createElement("span");
+        const label = document.createElement("span");
 
-//         label.classList.add("collaboration-cursor-name-label");
-//         label.setAttribute("style", `background-color: ${user.color}`);
-//         label.insertBefore(document.createTextNode(user.name), null);
-//         cursor.insertBefore(label, null);
+        label.classList.add("collaboration-cursor-name-label");
+        label.setAttribute("style", `background-color: ${user.color}`);
+        label.insertBefore(document.createTextNode(user.name), null);
+        cursor.insertBefore(label, null);
 
-//         return cursor;
-//       }
-//     };
-//   }
-// });
+        return cursor;
+      }
+    };
+  }
+});
 
 export type TextEditorProps = {
   placeholder?: string;
@@ -285,15 +275,15 @@ const TextEditor = ({
                 }`;
               },
               suggestion: getSuggestion(mentions)
-            })
+            }),
             // colaboration
-            // CustomCollaborationCursor.configure({
-            //   provider,
-            //   user: currentUser
-            // }),
-            // Collaboration.configure({
-            //   document: ydoc
-            // })
+            CustomCollaborationCursor.configure({
+              provider,
+              user: currentUser
+            }),
+            Collaboration.configure({
+              document: ydoc
+            })
           ]}
         />
         {error && (
