@@ -13,17 +13,9 @@ import {
   mergeAttributes
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Color } from "@tiptap/extension-color";
-import ListItem from "@tiptap/extension-list-item";
-import TextStyle from "@tiptap/extension-text-style";
 import Placeholder from "@tiptap/extension-placeholder";
-import TipTapTypography from "@tiptap/extension-typography";
 import { css, cx } from "@emotion/css";
 import { FormHelperText, Typography, useTheme } from "@mui/material";
-import Document from "@tiptap/extension-document";
-import Paragraph from "@tiptap/extension-paragraph";
-import Text from "@tiptap/extension-text";
-import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import Mention from "@tiptap/extension-mention";
 import Collaboration from "@tiptap/extension-collaboration";
@@ -33,11 +25,13 @@ import { WebrtcProvider } from "y-webrtc";
 import { Editor as NovelEditor } from "novel";
 
 import { Markdown } from "tiptap-markdown";
-import { LAYOUT_CONTENT_PADDING } from "../../../utils/constants";
-import { ITextEditorCollaborationUser } from "../../../types/app.type";
-import { ISelectOption } from "../../../../types/app.type";
+import {
+  ISelectOption,
+  ITextEditorCollaborationUser
+} from "../../../../types/app.type";
 import getSuggestion from "./mention/suggestion";
 import { getTextEditorInitialUser } from "../../../../utils/textEditor.utils";
+import { LAYOUT_CONTENT_PADDING } from "../../../../utils/constants";
 
 const classes = {
   editorRoot: (theme: Theme) => ({
@@ -146,37 +140,6 @@ const CustomMention = Mention.extend({
   }
 });
 
-const extensions = [
-  Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  TextStyle.configure({ types: [ListItem.name] } as any),
-  Document,
-  Paragraph,
-  Text,
-  TipTapTypography,
-  Underline,
-  // SelectedText,
-  Link.configure({
-    HTMLAttributes: {
-      // Change rel to different value
-      // Allow search engines to follow links(remove nofollow)
-      rel: "noopener noreferrer",
-      // Remove target entirely so links open in current tab
-      target: null
-    }
-  }),
-  StarterKit.configure({
-    bulletList: {
-      keepMarks: true,
-      keepAttributes: false // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-    },
-    orderedList: {
-      keepMarks: true,
-      keepAttributes: false // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-    },
-    history: false // important because history will now be handled by Y.js
-  })
-];
-
 const ydoc = new Y.Doc();
 const provider = new WebrtcProvider("workspace-04", ydoc);
 
@@ -284,6 +247,26 @@ const TextEditor = ({
             Placeholder.configure({
               placeholder
             }),
+            Link.configure({
+              HTMLAttributes: {
+                // Change rel to different value
+                // Allow search engines to follow links(remove nofollow)
+                rel: "noopener noreferrer",
+                // Remove target entirely so links open in current tab
+                target: null
+              }
+            }),
+            StarterKit.configure({
+              bulletList: {
+                keepMarks: true,
+                keepAttributes: false // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+              },
+              orderedList: {
+                keepMarks: true,
+                keepAttributes: false // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+              },
+              history: false // important because history will now be handled by Y.js
+            }),
             CustomMention.configure({
               HTMLAttributes: {
                 class: "mention"
@@ -302,8 +285,7 @@ const TextEditor = ({
             }),
             Collaboration.configure({
               document: ydoc
-            }),
-            ...extensions
+            })
           ]}
         />
         {error && (
