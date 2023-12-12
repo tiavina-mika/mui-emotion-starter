@@ -67,10 +67,10 @@ const classes = {
 
 const Home = () => {
   const form = useForm<IProblemInput>({
-    resolver: zodResolver(problemSchema),
-    defaultValues: {
-      description: "<p>hello</p>"
-    }
+    resolver: zodResolver(problemSchema)
+    // defaultValues: {
+    //   description: "<p>hello</p>"
+    // }
   });
 
   const { handleSubmit } = form;

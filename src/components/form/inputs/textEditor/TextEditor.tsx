@@ -59,7 +59,7 @@ const classes = {
       fontWeight: 300
     }
   }),
-  input: (theme: Theme, editable = true) =>
+  input: (theme: Theme, editable = true, placeholder: string) =>
     css({
       borderRadius: 6,
       border: editable ? "1px solid " + theme.palette.grey[800] : "none",
@@ -67,7 +67,7 @@ const classes = {
       paddingRight: editable ? 16 : 0,
       minHeight: 150,
       "& p.is-editor-empty:first-child::before": {
-        content: "attr(data-placeholder)",
+        content: `"${placeholder}"`,
         float: "left",
         height: 0,
         pointerEvents: "none",
@@ -140,30 +140,30 @@ const CustomMention = Mention.extend({
   }
 });
 
-const ydoc = new Y.Doc();
-const provider = new WebrtcProvider("workspace-04", ydoc);
+// const ydoc = new Y.Doc();
+// const provider = new WebrtcProvider("workspace-04", ydoc);
 
-const CustomCollaborationCursor = CollaborationCursor.extend({
-  addOptions() {
-    return {
-      ...this.parent?.(),
-      render: (user: ITextEditorCollaborationUser) => {
-        const cursor = document.createElement("div");
+// const CustomCollaborationCursor = CollaborationCursor.extend({
+//   addOptions() {
+//     return {
+//       ...this.parent?.(),
+//       render: (user: ITextEditorCollaborationUser) => {
+//         const cursor = document.createElement("div");
 
-        cursor.classList.add("collaboration-cursor-name-container");
+//         cursor.classList.add("collaboration-cursor-name-container");
 
-        const label = document.createElement("span");
+//         const label = document.createElement("span");
 
-        label.classList.add("collaboration-cursor-name-label");
-        label.setAttribute("style", `background-color: ${user.color}`);
-        label.insertBefore(document.createTextNode(user.name), null);
-        cursor.insertBefore(label, null);
+//         label.classList.add("collaboration-cursor-name-label");
+//         label.setAttribute("style", `background-color: ${user.color}`);
+//         label.insertBefore(document.createTextNode(user.name), null);
+//         cursor.insertBefore(label, null);
 
-        return cursor;
-      }
-    };
-  }
-});
+//         return cursor;
+//       }
+//     };
+//   }
+// });
 
 export type TextEditorProps = {
   placeholder?: string;
@@ -234,7 +234,7 @@ const TextEditor = ({
           disableLocalStorage
           editorProps={{
             attributes: {
-              class: classes.input(theme, editable)
+              class: classes.input(theme, editable, placeholder)
             },
             ...editorOptions
           }}
@@ -243,9 +243,6 @@ const TextEditor = ({
               html: true,
               transformCopiedText: true,
               transformPastedText: true
-            }),
-            Placeholder.configure({
-              placeholder
             }),
             Link.configure({
               HTMLAttributes: {
@@ -277,15 +274,15 @@ const TextEditor = ({
                 }`;
               },
               suggestion: getSuggestion(mentions)
-            }),
-            // colaboration
-            CustomCollaborationCursor.configure({
-              provider,
-              user: currentUser
-            }),
-            Collaboration.configure({
-              document: ydoc
             })
+            // colaboration
+            // CustomCollaborationCursor.configure({
+            //   provider,
+            //   user: currentUser
+            // }),
+            // Collaboration.configure({
+            //   document: ydoc
+            // })
           ]}
         />
         {error && (

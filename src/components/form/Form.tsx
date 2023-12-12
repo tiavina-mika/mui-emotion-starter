@@ -37,7 +37,6 @@ type Props = {
   direction?: "row" | "column";
   contentClassName?: string;
   className?: string;
-  withSaveButton?: boolean;
 };
 
 const Form = ({
@@ -54,8 +53,7 @@ const Form = ({
   className,
   buttonFullWidth = false,
   isDisabled = true,
-  direction = "column",
-  withSaveButton = false
+  direction = "column"
 }: Props) => {
   const {
     formState: { isDirty, isValid },
@@ -110,7 +108,6 @@ const Form = ({
               >
                 <Stack direction="row" spacing={2}>
                   {loading ? "..." : primaryButtonText}
-                  {withSaveButton && <img src="/icons/back.svg" alt="back" />}
                 </Stack>
               </Button>
             </Stack>
