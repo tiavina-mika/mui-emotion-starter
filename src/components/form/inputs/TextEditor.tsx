@@ -13,17 +13,10 @@ import {
   mergeAttributes
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Color } from "@tiptap/extension-color";
-import ListItem from "@tiptap/extension-list-item";
-import TextStyle from "@tiptap/extension-text-style";
 import Placeholder from "@tiptap/extension-placeholder";
-import TipTapTypography from "@tiptap/extension-typography";
 import { css, cx } from "@emotion/css";
 import { FormHelperText, Typography, useTheme } from "@mui/material";
-import Document from "@tiptap/extension-document";
-import Paragraph from "@tiptap/extension-paragraph";
-import Text from "@tiptap/extension-text";
-import Underline from "@tiptap/extension-underline";
+
 import Link from "@tiptap/extension-link";
 import Mention from "@tiptap/extension-mention";
 import Collaboration from "@tiptap/extension-collaboration";
@@ -145,37 +138,6 @@ const CustomMention = Mention.extend({
   }
 });
 
-const extensions = [
-  Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  TextStyle.configure({ types: [ListItem.name] } as any),
-  Document,
-  Paragraph,
-  Text,
-  TipTapTypography,
-  Underline,
-  // SelectedText,
-  Link.configure({
-    HTMLAttributes: {
-      // Change rel to different value
-      // Allow search engines to follow links(remove nofollow)
-      rel: "noopener noreferrer",
-      // Remove target entirely so links open in current tab
-      target: null
-    }
-  }),
-  StarterKit.configure({
-    bulletList: {
-      keepMarks: true,
-      keepAttributes: false // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-    },
-    orderedList: {
-      keepMarks: true,
-      keepAttributes: false // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-    },
-    history: false // important because history will now be handled by Y.js
-  })
-];
-
 const ydoc = new Y.Doc();
 const provider = new WebrtcProvider("workspace-04", ydoc);
 
@@ -224,7 +186,6 @@ const TextEditor = ({
   editable = true,
   ...editorOptions
 }: TextEditorProps) => {
-  const [selectedIAFeature, setSelectedIAFeature] = useState<string>("");
   const theme = useTheme();
   const currentUser = getTextEditorInitialUser(theme); // simulate user from db
 
@@ -259,7 +220,7 @@ const TextEditor = ({
       Collaboration.configure({
         document: ydoc
       }),
-      ...extensions
+      // ...extensions
     ],
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
@@ -282,7 +243,9 @@ const TextEditor = ({
   };
 
   if (!editable) {
-    return <EditorContent editor={editor} className={className} />;
+    return <NovelEditor editorProps={{
+      editable: () => false,
+    }} className={className} />;
   }
 
   return (
@@ -297,6 +260,12 @@ const TextEditor = ({
           </Typography>
         )}
         <NovelEditor
+          editorProps={{
+            editable: () => editable,
+            attributes: {
+              class: classes.input(theme, editable)
+            }
+          }}
           css={classes.editor}
           defaultValue={value}
           onDebouncedUpdate={handleChange}
@@ -306,7 +275,49 @@ const TextEditor = ({
               html: true,
               transformCopiedText: true,
               transformPastedText: true
+            }),
+            Placeholder.configure({
+              placeholder
+            }),
+            Link.configure({
+              HTMLAttributes: {
+                // Change rel to different value
+                // Allow search engines to follow links(remove nofollow)
+                rel: "noopener noreferrer",
+                // Remove target entirely so links open in current tab
+                target: null
+              }
+            }),
+            StarterKit.configure({
+              bulletList: {
+                keepMarks: true,
+                keepAttributes: false // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+              },
+              orderedList: {
+                keepMarks: true,
+                keepAttributes: false // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+              },
+              history: false // important because history will now be handled by Y.js
             })
+            CustomMention.configure({
+              HTMLAttributes: {
+                class: "mention"
+              },
+              renderLabel({ options, node }) {
+                return `${options.suggestion.char}${
+                  node.attrs.label ?? node.attrs.id.label
+                }`;
+              },
+              suggestion: getSuggestion(mentions)
+            }),
+            // colaboration
+            CustomCollaborationCursor.configure({
+              provider,
+              user: currentUser
+            }),
+            Collaboration.configure({
+              document: ydoc
+            }),
           ]}
         />
         <EditorContent editor={editor} css={classes.editor} />
@@ -316,7 +327,7 @@ const TextEditor = ({
           </FormHelperText>
         )}
         {/* number of user online */}
-        {editor && (
+        {/* {editor && (
           <div css={{ paddingTop: 6, padddingBottom: 6 }}>
             <Typography variant="body1">
               {editor.storage.collaborationCursor?.users.length} user
@@ -326,7 +337,7 @@ const TextEditor = ({
               online
             </Typography>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
