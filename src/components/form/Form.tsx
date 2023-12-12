@@ -6,21 +6,6 @@ import { Button, SxProps, Theme, Alert, Stack } from "@mui/material";
 import { FormEvent, ReactNode } from "react";
 import { FormProvider } from "react-hook-form";
 
-const classes = {
-  button: (theme: Theme) => ({
-    boxShadow: "none",
-    padding: "12px 4px",
-    "&:hover": {
-      backgroundColor: theme.palette.grey[50]
-    },
-    "&:disabled": {
-      border: "none",
-      backgroundColor: theme.palette.grey[50],
-      color: theme.palette.grey[300]
-    }
-  })
-};
-
 type Props = {
   onSubmit?: (() => void) | ((event: FormEvent<HTMLFormElement>) => void);
   onSaveButton?: () => void;
@@ -36,6 +21,7 @@ type Props = {
   isDisabled?: boolean;
   direction?: "row" | "column";
   contentClassName?: string;
+  buttonClassName?: string;
   className?: string;
 };
 
@@ -50,6 +36,7 @@ const Form = ({
   buttonSx,
   formId,
   contentClassName,
+  buttonClassName,
   className,
   buttonFullWidth = false,
   isDisabled = true,
@@ -98,7 +85,10 @@ const Form = ({
               <Button
                 type="submit"
                 variant="contained"
-                className={direction === "column" ? "endSelf" : ""}
+                className={cx(
+                  direction === "column" ? "endSelf" : "",
+                  buttonClassName
+                )}
                 sx={buttonSx}
                 disabled={
                   isDisabled &&

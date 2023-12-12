@@ -56,7 +56,19 @@ const classes = {
       padding: "4px 5px",
       fontFamily: "Product Sans Regular",
       fontWeight: 300
-    }
+    },
+    "& .ProseMirror ": {
+      paddingLeft: 30
+    },
+    "& .drag-handle": {
+      paddingLeft: "20px !important"
+    },
+    "& h1": { fontSize: 32 },
+    "& h2": { fontSize: 22 },
+    "& h3": { fontSize: 14 },
+    "& h4": { fontSize: 14 },
+    "& h5": { fontSize: 12 },
+    "& h6": { fontSize: 10 }
   }),
   input: (theme: Theme, editable = true, placeholder: string | undefined) =>
     css({

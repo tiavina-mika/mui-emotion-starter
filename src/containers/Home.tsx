@@ -1,7 +1,7 @@
 /** @jsxRuntime classic /
 /* @jsx jsx */
 /** @jsxImportSource @emotion/react */
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { LAYOUT_CONTENT_PADDING } from "../utils/constants";
 import Footer from "../components/Footer";
 import { Theme } from "@emotion/react";
@@ -62,15 +62,20 @@ const classes = {
   }),
   textEditorMenu: css({
     bottom: 70
-  })
+  }),
+  button: (theme: Theme) =>
+    css({
+      backgroundColor: theme.palette.primary.main
+    })
 };
 
 const Home = () => {
+  const theme = useTheme();
   const form = useForm<IProblemInput>({
-    resolver: zodResolver(problemSchema)
-    // defaultValues: {
-    //   description: "<p>hello</p>"
-    // }
+    resolver: zodResolver(problemSchema),
+    defaultValues: {
+      description: "<p>hello</p>"
+    }
   });
 
   const { handleSubmit } = form;
@@ -81,14 +86,14 @@ const Home = () => {
 
   return (
     <div className="flexColumn spaceBetween" css={classes.root}>
-      <div className="stretchSelf">
-        <div css={classes.header}>
+      <div className="flexColumn stretchSelf flex1">
+        <div css={classes.header} className="stretchSelf">
           <Typography variant="h3">Mik.</Typography>
         </div>
         <div css={classes.content}>
           <div css={{ marginTop: 4 }}>
             <Typography className="grey800" css={{ fontSize: 14 }}>
-              A project starter for Material UI 5, Emotion and TypeScript
+              Novel – AI-powered Notion-style editor
             </Typography>
           </div>
         </div>
@@ -99,6 +104,7 @@ const Home = () => {
             primaryButtonText="Save"
             buttonFullWidth
             contentClassName="flexColumn flex1"
+            buttonClassName={classes.button(theme)}
           >
             <TextEditorField
               className="flexColumn spaceBetween stretchSelf flex1"
