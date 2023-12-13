@@ -31,6 +31,9 @@ const classes = {
     }
   }),
   editor: (theme: Theme) => ({
+    "& .ProseMirror": {
+      padding: 12
+    },
     "& .mention": {
       backgroundColor: theme.palette.grey[200],
       paddingLeft: 6,
@@ -199,7 +202,7 @@ const TextEditor = ({
   //   }
   // }, [editor, currentUser]);
 
-  const handleChange = (editor) => {
+  const handleChange = (editor: any) => {
     const html = editor.getHTML();
     onChange?.(html);
   };
