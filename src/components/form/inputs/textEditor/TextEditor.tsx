@@ -216,6 +216,14 @@ const TextEditor = ({
         editorProps={{
           editable: () => editable
         }}
+        disableLocalStorage
+        extensions={[
+          Markdown.configure({
+            html: false,
+            transformCopiedText: true,
+            transformPastedText: true
+          })
+        ]}
       />
     );
   }
